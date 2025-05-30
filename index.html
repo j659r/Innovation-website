@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Innovation Hub</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f4f4;
+    }
+    header {
+      background-color: #2c3e50;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+    nav {
+      margin-top: 1rem;
+    }
+    nav button {
+      margin: 0 0.5rem;
+      padding: 0.5rem 1rem;
+      border: none;
+      background-color: #3498db;
+      color: white;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    nav button:hover {
+      background-color: #2980b9;
+    }
+    main {
+      padding: 2rem;
+    }
+    section {
+      display: none;
+      background: white;
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin-bottom: 1rem;
+    }
+    section:not(.hidden) {
+      display: block;
+    }
+    textarea {
+      width: 100%;
+      height: 100px;
+      margin-top: 1rem;
+      padding: 0.5rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    input[type="text"], input[type="password"] {
+      display: block;
+      margin: 0.5rem 0;
+      padding: 0.5rem;
+      width: 100%;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      margin-top: 0.5rem;
+      padding: 0.5rem 1rem;
+      background-color: #2ecc71;
+      border: none;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #27ae60;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background-color: #2c3e50;
+      color: white;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+    }
+  </style>
+  <script>
+    function showSection(id) {
+      document.querySelectorAll('main section').forEach(section => {
+        section.classList.add('hidden');
+      });
+      document.getElementById(id).classList.remove('hidden');
+    }
+    function signUp() {
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      if (username && password) {
+        localStorage.setItem(username, password);
+        alert('User registered successfully!');
+      } else {
+        alert('Please enter a username and password.');
+      }
+    }
+    function signIn() {
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      const storedPassword = localStorage.getItem(username);
+      if (storedPassword === password) {
+        alert('Login successful!');
+        showSection('home');
+      } else {
+        alert('Invalid username or password.');
+      }
+    }
+    function logout() {
+      showSection('auth');
+    }
+    function submitIdea() {
+      const idea = document.getElementById('ideaInput').value;
+      const list = document.getElementById('ideaList');
+      if (idea.trim()) {
+        const li = document.createElement('li');
+        li.textContent = idea;
+        list.appendChild(li);
+        document.getElementById('ideaInput').value = '';
+      } else {
+        alert('Please enter your idea.');
+      }
+    }
+    window.onload = () => {
+      showSection('auth');
+    }
+  </script>
+</head>
+<body>
+  <header>
+    <h1>Innovation Hub</h1>
+    <nav>
+      <button onclick="showSection('home')">Home</button>
+      <button onclick="showSection('ideas')">Share Ideas</button>
+      <button onclick="showSection('materials')">Buy Materials</button>
+      <button onclick="showSection('tutorials')">Tutorials</button>
+      <button onclick="logout()">Logout</button>
+    </nav>
+  </header>
+  <main>
+    <section id="auth">
+      <h2>Sign In / Sign Up</h2>
+      <input type="text" id="username" placeholder="Username" />
+      <input type="password" id="password" placeholder="Password" />
+      <button onclick="signIn()">Sign In</button>
+      <button onclick="signUp()">Sign Up</button>
+    </section>
+    <section id="home" class="hidden">
+      <h2>Welcome to the Innovation Hub</h2>
+      <p>Collaborate to solve national issues, manage e-waste, and explore renewable energy innovations.</p>
+    </section>
+    <section id="ideas" class="hidden">
+      <h2>Share Your Innovative Ideas</h2>
+      <textarea id="ideaInput" placeholder="Describe your idea..."></textarea>
+      <button onclick="submitIdea()">Submit Idea</button>
+      <ul id="ideaList"></ul>
+    </section>
+    <section id="materials" class="hidden">
+      <h2>Where to Buy Materials</h2>
+      <ul>
+        <li><a href="https://www.temu.com" target="_blank">Temu</a></li>
+        <li><a href="https://www.jumia.com" target="_blank">Jumia</a></li>
+      </ul>
+    </section>
+    <section id="tutorials" class="hidden">
+      <h2>Learn with Tutorials</h2>
+      <ul>
+        <li><a href="https://www.youtube.com/results?search_query=e-waste+management+tutorial" target="_blank">E-Waste Management Tutorials</a></li>
+        <li><a href="https://www.youtube.com/results?search_query=renewable+energy+projects" target="_blank">Renewable Energy Projects</a></li>
+        <li><a href="https://www.youtube.com/results?search_query=national+problem+solving+innovation" target="_blank">Solving National Problems</a></li>
+      </ul>
+    </section>
+  </main>
+  <footer>
+    <p>&copy; 2025 Innovation Hub. All rights reserved.</p>
+  </footer>
+</body>
+</html>
